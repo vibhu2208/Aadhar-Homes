@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useState, useEffect } from 'react'
 import Login from './pages/Login'
 import AdminDashboard from './pages/AdminDashboard'
-import Projects from './pages/Projects'
+import HomePage from './pages/HomePage'
 import ProjectDetail from './pages/ProjectDetail'
+import AddProject from './pages/AddProject'
 import { authService } from './services/authService'
 
 function App() {
@@ -47,12 +48,16 @@ function App() {
               <Navigate to="/login" replace />
             } 
           />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route 
-            path="/" 
-            element={<Navigate to="/projects" replace />} 
+            path="/admin/add-project" 
+            element={
+              isAuthenticated ? 
+              <AddProject /> : 
+              <Navigate to="/login" replace />
+            } 
           />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/project/:id" element={<ProjectDetail />} />
         </Routes>
       </div>
     </Router>

@@ -111,7 +111,7 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
               <span className="text-sm text-gray-500">Admin Dashboard</span>
             </div>
             <div className="flex items-center space-x-4">
-              <Link to="/projects" className="text-gray-600 hover:text-gray-900">
+              <Link to="/" className="text-gray-600 hover:text-gray-900">
                 View Public Site
               </Link>
               <button
@@ -254,15 +254,12 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
               <div className="card">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <button
-                    onClick={() => {
-                      setActiveTab('projects')
-                      setShowAddForm(true)
-                    }}
+                  <Link
+                    to="/admin/add-project"
                     className="btn-primary text-center"
                   >
                     + Add Project
-                  </button>
+                  </Link>
                   <button
                     onClick={() => {
                       setActiveTab('newlaunches')
@@ -272,7 +269,7 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
                   >
                     + Add New Launch
                   </button>
-                  <Link to="/projects" className="btn-secondary text-center">
+                  <Link to="/" className="btn-secondary text-center">
                     View Public Site
                   </Link>
                   <button
@@ -293,12 +290,12 @@ const AdminDashboard = ({ setIsAuthenticated }) => {
               
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-gray-900">Projects Management</h2>
-                <button
-                  onClick={() => setShowAddForm(true)}
+                <Link
+                  to="/admin/add-project"
                   className="btn-primary"
                 >
                   + Add New Project
-                </button>
+                </Link>
               </div>
 
               {/* Projects Table */}
