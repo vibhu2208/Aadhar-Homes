@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar'
 import PropertyGrid from '../components/PropertyGrid'
 import SectionTabs from '../components/SectionTabs'
 import ShowcaseSection from '../components/ShowcaseSection'
+import StatsCounters from '../components/StatsCounters'
 
 const HomePage = () => {
   const [activeSection, setActiveSection] = useState('all')
@@ -156,6 +157,9 @@ const HomePage = () => {
 
       {/* Showcase Section (modern 2-column layout) */}
       <ShowcaseSection />
+
+      {/* Stats counters with count-up animation */}
+      <StatsCounters />
 
       {/* Featured Projects Section */}
       <div className="py-24 bg-gray-50">
