@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 
 const PropertyCard = ({ 
   property, 
-  variant = 'default', // 'default', 'featured', 'compact'
+  variant = 'default', // 'default', 'featured', 'compact', 'showcase'
   showBuilder = true,
   showStatus = true,
+  showBedBath = false,
   className = ''
 }) => {
   if (!property) return null
@@ -52,25 +53,36 @@ const PropertyCard = ({
 
   const cardVariants = {
     default: {
-      container: 'bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300',
-      image: 'w-full h-48 object-cover rounded-t-xl',
-      content: 'p-4 space-y-2',
-      title: 'text-lg font-semibold text-gray-900 line-clamp-1',
-      button: 'block w-full bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-lg transition duration-200'
+      container: 'group cursor-pointer transition-all duration-300 hover:-translate-y-1',
+      imageContainer: 'relative mb-4',
+      image: 'w-full h-64 md:h-72 lg:h-80 object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105',
+      content: 'space-y-3',
+      title: 'text-xl font-bold text-gray-900 line-clamp-2',
+      button: 'block w-full bg-black hover:bg-gray-800 text-white text-center font-medium py-3 px-4 rounded-xl transition duration-200'
     },
     featured: {
-      container: 'bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300',
-      image: 'w-full h-64 object-cover rounded-t-xl',
-      content: 'p-6',
-      title: 'text-xl font-bold text-gray-900 mb-2 line-clamp-1',
-      button: 'block w-full bg-green-500 hover:bg-green-600 text-white text-center font-bold py-3 px-4 rounded-lg shadow-md transition duration-200'
+      container: 'group cursor-pointer transition-all duration-300 hover:-translate-y-1',
+      imageContainer: 'relative mb-4',
+      image: 'w-full h-72 md:h-80 lg:h-96 object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105',
+      content: 'space-y-4',
+      title: 'text-2xl font-bold text-gray-900 line-clamp-2',
+      button: 'block w-full bg-black hover:bg-gray-800 text-white text-center font-medium py-3 px-4 rounded-xl shadow-md transition duration-200'
     },
     compact: {
-      container: 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300',
-      image: 'w-full h-32 object-cover rounded-t-lg',
-      content: 'p-3 space-y-1',
-      title: 'text-sm font-semibold text-gray-900 line-clamp-1',
-      button: 'block w-full bg-green-500 hover:bg-green-600 text-white text-center font-medium py-1.5 px-3 rounded text-sm transition duration-200'
+      container: 'group cursor-pointer transition-all duration-300 hover:-translate-y-1',
+      imageContainer: 'relative mb-3',
+      image: 'w-full h-48 md:h-56 object-cover rounded-xl transition-transform duration-300 group-hover:scale-105',
+      content: 'space-y-2',
+      title: 'text-lg font-semibold text-gray-900 line-clamp-1',
+      button: 'block w-full bg-black hover:bg-gray-800 text-white text-center font-medium py-2 px-3 rounded-lg text-sm transition duration-200'
+    },
+    showcase: {
+      container: 'group cursor-pointer transition-all duration-300 hover:-translate-y-1',
+      imageContainer: 'relative mb-4',
+      image: 'w-full h-72 md:h-80 lg:h-96 object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105',
+      content: 'space-y-4',
+      title: 'text-xl font-bold text-gray-900 line-clamp-2',
+      button: 'block w-full bg-black hover:bg-gray-800 text-white text-center font-medium py-3 px-4 rounded-xl transition duration-200'
     }
   }
 
@@ -78,8 +90,8 @@ const PropertyCard = ({
 
   return (
     <div className={`${styles.container} ${className}`}>
-      {/* Property Image */}
-      <div className="relative">
+      {/* Section 1: Property Image with rounded corners */}
+      <div className={styles.imageContainer}>
         <img
           src={getImageUrl()}
           alt={property.projectName}
@@ -89,62 +101,61 @@ const PropertyCard = ({
           }}
         />
         
-        {/* Status Badge */}
+        {/* Status Badge - Floating in top-left */}
         {showStatus && property.project_Status && (
-          <div className="absolute top-2 right-2">
-            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusBadgeColor(property.project_Status)}`}>
-              {property.project_Status}
+          <div className="absolute top-3 left-3">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-blue-500 text-white shadow-sm">
+              For Sale
             </span>
           </div>
         )}
       </div>
 
-      {/* Property Details */}
+      {/* Section 2: Property Information */}
       <div className={styles.content}>
-        {/* Project Name */}
-        <h3 className={styles.title}>
+        {/* Bed/Bath Icons Row */}
+        {showBedBath && variant !== 'compact' && (
+          <div className="flex items-center gap-6 text-sm text-gray-600 mb-3">
+            <div className="flex items-center gap-1">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2L3 7v11h4v-6h6v6h4V7l-7-5z"/>
+              </svg>
+              <span>{property.bedrooms || 5} Bedrooms</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M8 2a2 2 0 00-2 2v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-2V4a2 2 0 00-2-2H8zM6 6V4h8v2H6z"/>
+              </svg>
+              <span>{property.bathrooms || 2} Bathroom</span>
+            </div>
+          </div>
+        )}
+
+        {/* Property Title */}
+        <h3 className={`${styles.title} mb-2`}>
           {property.projectName}
         </h3>
         
-        {/* Builder Name */}
-        {showBuilder && property.builderName && (
-          <p className={`text-sm text-gray-600 ${variant === 'compact' ? 'text-xs' : ''}`}>
-            by {property.builderName}
-          </p>
-        )}
-        
-        {/* Location */}
-        {property.city && (
-          <p className={`text-sm text-gray-600 flex items-center ${variant === 'compact' ? 'text-xs' : ''}`}>
-            <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            {property.city}
-          </p>
-        )}
-
         {/* Price */}
-        <div className={`flex justify-between items-center ${variant === 'featured' ? 'mb-4' : 'pt-2'}`}>
-          <div>
-            <p className={`font-bold text-green-600 ${
-              variant === 'featured' ? 'text-2xl' : 
-              variant === 'compact' ? 'text-sm' : 'text-lg'
-            }`}>
-              {formatPrice(property.minPrice, property.maxPrice)}
-            </p>
-          </div>
+        <div className="mb-1">
+          <p className={`font-bold text-black ${
+            variant === 'featured' ? 'text-2xl' : 
+            variant === 'compact' ? 'text-lg' : 'text-xl'
+          }`}>
+            {formatPrice(property.minPrice, property.maxPrice)}
+          </p>
         </div>
 
-        {/* View Details Button */}
-        <div className={variant === 'featured' ? '' : 'pt-4'}>
-          <Link
-            to={`/project/${property._id}`}
-            className={styles.button}
-          >
-            View Details
-          </Link>
-        </div>
+        {/* Location with address format */}
+        {(() => {
+          const address = property.projectAddress 
+          const city = property.city
+          if (!address && !city) return null
+          const text = address && city ? `${address}, ${city}` : (address || city)
+          return (
+            <p className="text-gray-500 text-sm">{text}</p>
+          )
+        })()}
       </div>
     </div>
   )

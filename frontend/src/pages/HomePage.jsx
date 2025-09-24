@@ -7,6 +7,7 @@ import PropertyGrid from '../components/PropertyGrid'
 import SectionTabs from '../components/SectionTabs'
 import ShowcaseSection from '../components/ShowcaseSection'
 import StatsCounters from '../components/StatsCounters'
+import PropertyShowcase from '../components/PropertyShowcase'
 
 const HomePage = () => {
   const [activeSection, setActiveSection] = useState('all')
@@ -160,6 +161,14 @@ const HomePage = () => {
 
       {/* Stats counters with count-up animation */}
       <StatsCounters />
+
+      {/* Premier Properties Showcase */}
+      <PropertyShowcase 
+        properties={featuredProjects}
+        loading={loading}
+        maxProperties={6}
+        onViewAll={() => setActiveSection('all')}
+      />
 
       {/* Featured Projects Section */}
       <div className="py-24 bg-gray-50">

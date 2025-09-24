@@ -74,6 +74,8 @@ const PropertyGrid = ({
           key={property._id}
           property={property}
           variant={variant}
+          showBedBath={true}
+          showStatus={true}
         />
       ))}
     </div>
